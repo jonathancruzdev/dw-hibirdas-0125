@@ -1,4 +1,3 @@
-const { error } = require('console');
 const fs = require('fs/promises');
 const path = './products.json';
 
@@ -12,7 +11,6 @@ class ProductManager {
         return  crypto.randomUUID();
     }
     setProduct(product){
-
         this.getProducts().then( () => {
             product.id = this.randomID();
 

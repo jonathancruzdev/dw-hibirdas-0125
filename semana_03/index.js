@@ -1,15 +1,16 @@
 import chalk from "chalk";
 import express from "express";
+import UsersManager from "./UsersManager.js";
 
 const port = 5000;
 const app = express();
 let count = 0;
-
-const users = [
+const admUser = new UsersManager();
+/* const users = [
     {id:1, name: "Julia"},
     {id:2, name: "Mateo"},
     {id:3, name: "Manuel"}
-]
+] */
 
 app.get('/', (request, response) => {
     count++;
@@ -17,8 +18,9 @@ app.get('/', (request, response) => {
     response.send('Hola desde Express');
 })
 
-const getUsers = (request, response) =>{
+const getUsers = async (request, response) =>{
     console.log('GET Users');
+    const users = await admUser.getUsers();
     response.json(users);
 }
 
@@ -26,10 +28,10 @@ const getUsers = (request, response) =>{
 // Rutas de la API
 app.get('/api/users', getUsers);
 
-app.get('/api/users/:id', (request, response) =>{
+app.get('/api/users/:id', async (request, response) =>{
     const id = request.params.id;
-    console.log(id);
-    const user = users.find( u => u.id == id);
+   // console.log(id);
+    const user = await admUser.getUserById(id)
     response.json(user);
 })
 

@@ -54,6 +54,33 @@ app.post('/api/users', async (request, response)=>{
     }
 });
 
+app.delete('/api/users/:id', async(request, response) =>{
+    const { id } = request.params;
+    const status = await admUser.deleteUserById(id);
+    if( status ){
+        response.json({ 
+            msg: 'Usuario eliminado', 
+            data: [] 
+        });
+    } else {
+        response.status(404).json( { msg: 'No se encontro el Usuario', data: [] });
+    }
+})
+
+app.put('/api/users/:id', async(request, response) =>{
+    const { id } = request.params;
+    const user = request.body;
+    const status = await admUser.updateUserById(id, user);
+
+    if( status ){
+        response.json({ 
+            msg: 'Usuario Actualizado', 
+            data: [] 
+        });
+    } else {
+        response.status(404).json( { msg: 'No se encontro el Usuario para Actualizar', data: [] });
+    }
+})
 
 app.listen(port, ()=>{
     console.log( chalk.green(`Servidor Web en el puerto ${port}`));

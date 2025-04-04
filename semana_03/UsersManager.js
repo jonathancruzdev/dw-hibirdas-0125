@@ -36,5 +36,30 @@ class UsersManager {
         const users = list.find( item => item.id == id);
         return users ? users : undefined;
     }
+    async deleteUserById(id) {
+        await this.getUsers();
+        const index = this.users.findIndex( u => u.id == id);
+        if( index != -1){
+            this.users.splice(index, 1);
+            const data = JSON.stringify(this.users, null, 2);
+            await fs.writeFile(path, data);
+            return true
+        } else {
+            return false;
+        }
+    }
+    async updateUserById(id, user) {
+        await this.getUsers();
+        const index = this.users.findIndex( u => u.id == id);
+        if( index != -1){
+            this.users[index].name = user.name;
+            this.users[index].email = user.email;
+            const data = JSON.stringify(this.users, null, 2);
+            await fs.writeFile(path, data);
+            return true
+        } else {
+            return false;
+        }
+    }
 }
 export default UsersManager;

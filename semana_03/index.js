@@ -4,13 +4,9 @@ import UsersManager from "./UsersManager.js";
 
 const port = 5000;
 const app = express();
+app.use( express.json());
 let count = 0;
 const admUser = new UsersManager();
-/* const users = [
-    {id:1, name: "Julia"},
-    {id:2, name: "Mateo"},
-    {id:3, name: "Manuel"}
-] */
 
 app.get('/', (request, response) => {
     count++;
@@ -21,20 +17,42 @@ app.get('/', (request, response) => {
 const getUsers = async (request, response) =>{
     console.log('GET Users');
     const users = await admUser.getUsers();
-    response.json(users);
+    response.json({ msg: 'Ok', data: users });
 }
-
 
 // Rutas de la API
 app.get('/api/users', getUsers);
 
 app.get('/api/users/:id', async (request, response) =>{
     const id = request.params.id;
-   // console.log(id);
-    const user = await admUser.getUserById(id)
-    response.json(user);
+    const user = await admUser.getUserById(id);
+    if( user ){
+        response.json({ 
+            msg: 'Ok', 
+            data: [user] 
+        });
+    } else {
+        response.status(404).json( { msg: 'Usuario no encontrado', data: [] });
+    }
 })
 
+app.post('/api/users', async (request, response)=>{
+    try {
+        // Validar los DATOS 🚧
+        const user = request.body;
+        const id = await admUser.setUser(user);
+        response.status(200).json({
+            msg: 'Usuario Guardado',
+            data: { id }
+        })
+
+    } catch (error) {
+        console.error(error);
+        response.status(500).json({
+            msg: "Error del Servidor: No se pudo guardar el usuario"
+        })
+    }
+});
 
 
 app.listen(port, ()=>{

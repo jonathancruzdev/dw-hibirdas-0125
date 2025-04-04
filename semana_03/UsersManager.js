@@ -34,7 +34,7 @@ class UsersManager {
     async getUserById(id){
         const list = await this.getUsers();
         const users = list.find( item => item.id == id);
-        return users ? users : {};
+        return users ? users : undefined;
     }
 }
 export default UsersManager;

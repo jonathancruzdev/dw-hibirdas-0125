@@ -1,22 +1,47 @@
 [
-    {
-        "id": 1,
-        "name": "Julia",
-        "email": "julia@mail.com"
-    },
-    {
-        "id": 2,
-        "name": "Mateo",
-        "email": "mateo@mail.com"
-    },
-    {
-        "id": 3,
-        "name": "Pedro",
-        "email": "pedro@mail.com"
-    },
-    {
-        "id": 4,
-        "name": "Micaela",
-        "email": "micaela@mail.com"
-    }
+  {
+    "id": 1,
+    "name": "Julia",
+    "email": "julia@mail.com"
+  },
+  {
+    "id": 2,
+    "name": "Mateo",
+    "email": "mateo@mail.com"
+  },
+  {
+    "id": 3,
+    "name": "Pedro",
+    "email": "pedro@mail.com"
+  },
+  {
+    "id": 4,
+    "name": "Micaela",
+    "email": "micaela@mail.com"
+  },
+  {
+    "name": "Sofia",
+    "email": "sofia@mail.com",
+    "id": "8b727678-5b7f-4f9c-99d4-f0814edd4d00"
+  },
+  {
+    "name": "Julieta",
+    "email": "julieta@gmail.com",
+    "id": "b34a30e5-2c8b-439c-919f-7fa15f412cba"
+  },
+  {
+    "name": "Sofia2",
+    "email": "sofia@mail.com",
+    "id": "cc659371-0b8f-4277-9c55-2b9bf3afde81"
+  },
+  {
+    "name": "Sofia2",
+    "email": "sofia@mail.com",
+    "id": "78a58b03-46b4-4b56-8a4b-97f9bb978975"
+  },
+  {
+    "name": "Sofia2",
+    "email": "sofia@mail.com",
+    "id": "6645961f-373d-4507-940d-6327b3b127b5"
+  }
 ]

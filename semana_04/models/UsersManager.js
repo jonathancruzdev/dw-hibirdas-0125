@@ -1,5 +1,4 @@
 import fs from 'fs/promises';
-import crypto from 'crypto';
 const path = './users.json';
 
 class UsersManager {

@@ -7,7 +7,8 @@ const port = process.env.PORT;
 const app = express();
 // Middleware
 app.use( express.json() );
-
+// Directorio de acceso publico de archivo estaticos
+app.use( express.static('public'));
 app.get('/', (request, response) =>{
     response.send('<h1> Home </h1>');
 })

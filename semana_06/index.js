@@ -19,7 +19,7 @@ db.on('error', (error) => {
 });
 
 db.once('open', () => {
-    console.info('Conexión exitosa');
+    console.info('Conexión exitosa con la DB');
 })
 
 

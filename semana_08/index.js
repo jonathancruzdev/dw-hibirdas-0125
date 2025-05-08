@@ -27,6 +27,12 @@ db.once('open', () => {
 app.use( express.json() );
 // Directorio de acceso publico de archivo estaticos
 app.use( express.static('public'));
+
+/* app.use( (req, res, next) => {
+    console.log('Middleware...');
+    next();
+})
+ */
 app.get('/', (request, response) =>{
     response.send('<h1> Home </h1>');
 })

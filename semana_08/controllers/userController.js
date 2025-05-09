@@ -34,22 +34,40 @@ const getUserById = async( request, response) => {
 }
 
 const setUser = async( request, response) =>{
+    const { name, email, password } = request.body;
+
+    if( !name || !email || !password){
+        response.status(400).json({error: 'Faltan campos obligatorios'});
+    }
+
     try {
-        const { name, email, legajo, password } = request.body;
         // Verificamos que el email no exista en la db
         const user = await User.findOne({ email: email });
         if( user ){
             return response.status(404).json({msg:"El usuario ya existe"});
         }
         const passwordHash = await bcrypt.hash( password, salt);
-        const userNew = new User( {name, email, password: passwordHash, legajo}); 
-        userNew.save();
+        const userNew = new User( {name, email, password: passwordHash}); 
+        
+        await userNew.save();
+    
         const id = userNew._id;
    
         response.status(202).json({msg: 'Usuario guardado', id } );
     } catch (error) {
+        console.log('.......')
         console.error({error});
-        response.status(500).json({error: 'Error del servidor'});
+
+        if( error.name === 'ValidationError'){
+            // Extraemos los mensajes de errores
+            const listError = Object.values( error.errors)[0].message 
+            response.status(403).json({error: listError});
+
+        } else {
+            response.status(500).json({error: 'Error del servidor'});
+        }
+
+    
     }
 }
 

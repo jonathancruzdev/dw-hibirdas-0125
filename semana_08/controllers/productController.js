@@ -7,7 +7,7 @@ const getProducts = async( request, response) => {
         if( full){
             products = await Product.find({full});
         } else {
-            products = await Product.find();
+            products = await Product.find().populate('categoria');
         }
      
         response.status(200).json({ msg: 'ok', data: products});
@@ -34,16 +34,29 @@ const getProductById = async( request, response) => {
 }
 
 const setProduct = async( request, response) =>{
+    // Validación Minima
+    const { name, price, full, categoriaId } = request.body;
+
+    if( !name || !price || !categoriaId) {
+        response.status(400).json({msg: 'Faltan campos obligatorios' } );
+    }
+
     try {
-        const { name, price, full } = request.body;
-        const productNew = new Product( {name, price, full}); 
-        productNew.save();
+        const productNew = new Product( {name, price, full, categoria: categoriaId }); 
+        await productNew.save();
         const id = productNew._id;
    
         response.status(202).json({msg: 'Producto guardado', id } );
     } catch (error) {
-        console.error({error});
-        response.status(500).json({error: 'Error del servidor'});
+        if( error.name === 'ValidationError'){
+            // Extraemos los mensajes de errores
+            const listError = Object.values( error.errors)[0].message 
+            response.status(403).json({error: listError});
+
+        } else {
+            response.status(500).json({error: 'Error del servidor'});
+        }
+
     }
 }
 

@@ -1,65 +1,43 @@
 import './App.css'
 import { useState } from 'react'
 
-import Header from './components/Header'
-import Card from './components/Card'
-import ProductsContainer from './components/ProductsContainer'
+import Home from './views/Home'
+import Products from './views/Products'
+import Contact from './views/Contact'
+import NotFound from './views/NotFound'
 
+
+import Header from './components/Header'
+import { Routes, Route, NavLink} from 'react-router-dom'
 
 function App() {
 
-  // Estado
-  const [ usuario, setUsuario ] = useState({ name: 'Juan', age: 27 });
-  const [ products, setProducts ] = useState( [
-    { id:1, name: 'Celular Samsung', description: 'Celular Samsung A16 Dual Sim', price: 50000 },
-    { id:2, name: 'Celular Motorola', description: 'Celular Motorola G15 Dual Sim', price: 75000 },
-    { id:3, name: 'Mouse', description: 'Mouse gamer', price: 10000 }
-  ])
-  
-  function cambiarNombre (){
-    // const objTemp = { ...usuario,  name: 'Sofia' };
-    setUsuario({ ...usuario, name: 'Sofia' });
-  }
-  
-  function nuevoProducto(){
-    const id = products.length + 1
-    const nuevo =  { id, name: 'Pendrive', description: '...', price: 200 };
-    setProducts( [...products, nuevo] );
-  }
-
-  function addCar(name){
-    alert('Padre ' +  name);
-  }
 
   return (
     <>
-      <Header title="To Do" />
-      <h4> Bienvenido { usuario.name }</h4>
-      <p>edad: { usuario.age }</p>
-      <button onClick={ cambiarNombre } type='button'>Cambiar Nombre</button>
+      <Header title="Productos APP" />
+     
+      <nav>
+        <ul>
+          <li>
+            <NavLink to='/'> Inicio</NavLink>
+          </li>
+          <li>
+            <NavLink to='/products'> Productos</NavLink>
+          </li>
+          <li>
+            <NavLink to='/contact'>Contactos </NavLink>
+          </li>
+        </ul>
+      </nav>
 
-      <button onClick={ nuevoProducto } type='button'>Nuevo Producto</button>
-
-
-      <hr />
-      <p>otra forma</p>
-
-      
-
-      <ProductsContainer >
-        {
-          products.map( product =>  (
-            <Card
-              key={ product.id}
-              addFn={ addCar } 
-              name={product.name} 
-              description={product.description} 
-              price={product.price}
-              />) 
-            )
-        }
-   
-      </ProductsContainer>
+      {/*  En está sección vamos a mostrar las vista */ }
+      <Routes>
+        <Route path='/'  element={ <Home />} />
+        <Route path='/products' element={ <Products />} />
+        <Route path='/contact' element={ <Contact />} />
+        <Route path='*' element={ <NotFound />} />
+      </Routes>
       
     </>
   )

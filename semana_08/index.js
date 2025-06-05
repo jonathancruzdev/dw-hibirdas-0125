@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-
+import cors from "cors";
 
 dotenv.config();
 import routerAPI from "./routers/index.js";
@@ -23,7 +23,8 @@ db.once('open', () => {
 })
 
 
-// Middleware
+// Middlewares
+app.use( cors());
 app.use( express.json() );
 // Directorio de acceso publico de archivo estaticos
 app.use( express.static('public'));

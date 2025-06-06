@@ -6,6 +6,7 @@ import Products from './views/Products'
 import Contact from './views/Contact'
 import NotFound from './views/NotFound'
 import Users from './views/Users'
+import UserNew from './views/UserNew'
 
 import Header from './components/Header'
 import { Routes, Route, NavLink} from 'react-router-dom'
@@ -26,7 +27,10 @@ function App() {
             <NavLink to='/products'> Productos</NavLink>
           </li>
           <li>
-            <NavLink to='/users'>Lista de Usuarios</NavLink>
+            <NavLink to='/users'>ABM Usuarios</NavLink>
+          </li>
+          <li>
+            <NavLink to='/usernew'>Nuevo Usuario</NavLink>
           </li>
           <li>
             <NavLink to='/contact'>Contactos </NavLink>
@@ -41,6 +45,7 @@ function App() {
         <Route path='/products' element={ <Products />} />
         <Route path='/contact' element={ <Contact />} />
         <Route path='/users' element={<Users />} />
+        <Route path='/usernew' element={ <UserNew/> } />
         <Route path='*' element={ <NotFound />} />
       </Routes>
       

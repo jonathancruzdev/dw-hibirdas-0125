@@ -1,25 +1,50 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 
-function UserNew (){
+function UserUpdate (){
     const API_URL = 'http://127.0.0.1:5000/api'
     const [ user, setUser] = useState({_id: '',name: '', email: '', password: ''})
+    const {id} = useParams();
 
     const navigate = useNavigate();
 
-    function handlerChange ( e) {
-        const value = e.target.value;
-        const key = e.target.name;
-        setUser( {...user, [key]: value});
-        //setUser({ ...user, [e.target.name]: e.target.value})
+    async function getUserById(){
+        try {
+            const response = await fetch(`${API_URL}/users/${id}`);
+            if( !response.ok){
+                alert('Error al solicitar wl usuarios')
+                return
+            } 
+            const {data} = await response.json();
+            setUser( data );
+            
+            console.log(data);
+    
+        } catch (error) {
+            console.error(error);
+            alert('Upss tenemos un error en el servidor');
+        }
     }
-    async function postUser( event){
+    useEffect(  () => {
+       
+        getUserById();
+
+    }, [] )
+
+
+
+
+    function handlerChange ( e) {
+        setUser({ ...user, [e.target.name]: e.target.value})
+    }
+
+    async function putUser( event){
         event.preventDefault();
         console.log(user);
         const opciones = {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -27,15 +52,13 @@ function UserNew (){
         }
 
         try {
-            const response = await fetch(`${API_URL}/users`, opciones);
+            const response = await fetch(`${API_URL}/users/${id}`, opciones);
             if( !response.ok){
                 const d = await response.json();
                 const { msg}=d;  
                 alert('Error al registrar el usuario: ' + msg)
                 return
             } 
-
-
 
             const data = await response.json();
            
@@ -53,10 +76,10 @@ function UserNew (){
 
     return (
         <>
-            <h2> Crear Usuario</h2>
+            <h2> Actualizar Usuario {id}</h2>
             <hr />
 
-            <form onSubmit={ postUser }>
+            <form onSubmit={ putUser }>
                 <label htmlFor="name">Nombre</label>
                 <input
                     name='name' 
@@ -88,4 +111,4 @@ function UserNew (){
     )
 }
 
-export default UserNew
+export default UserUpdate

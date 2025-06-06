@@ -53,7 +53,7 @@ function Products (){
     }
     return (
         <>
-            <h2> Produtos</h2>
+            <h2> Productos</h2>
             <hr />
             <form onSubmit={ nuevoProducto}>
         <label htmlFor="">Nombre</label>

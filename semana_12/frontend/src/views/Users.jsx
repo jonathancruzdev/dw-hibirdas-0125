@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -6,6 +7,8 @@ function Users (){
     const API_URL = 'http://127.0.0.1:5000/api'
     const [ users, setUsers] = useState([]);
    
+    const navigate = useNavigate();
+
     async function getUser(){
         try {
             const response = await fetch(`${API_URL}/users`);
@@ -57,8 +60,10 @@ function Users (){
 
     return (
         <>
-            <h2> Lista de Usuarios</h2>
+            <h2> ABM de Usuarios</h2>
             <hr />
+            <input type='search' />
+            <button onClick={ () => { navigate('/usernew')}}> Nuevo Usuario</button>
             <table>
                 <thead>
                     <tr>
@@ -74,7 +79,9 @@ function Users (){
                                 <td>{user.name}</td>
                                 <td>{user.email}</td> 
                                 <td>
-                                    <button>E</button>
+                                    <button onClick={ () => {
+                                        navigate(`/userupdate/${user._id}`)
+                                    }}>E</button>
                                 </td>
                                 <td>
                                     <button

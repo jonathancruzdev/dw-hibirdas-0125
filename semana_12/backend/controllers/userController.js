@@ -23,7 +23,13 @@ const getUserById = async( request, response) => {
         const { id } = request.params
         const user = await User.findById(id);
         if (user){
-            response.status(200).json({ msg: 'ok', data: user});
+
+            const data = {};
+            data._id =  user._id;
+            data.name =  user.name;
+            data.email =  user.email;
+
+            response.status(200).json({ msg: 'ok', data});
         } else {
             response.status(404).json({ msg: 'No se econtro el usuario', data: {}});
         }

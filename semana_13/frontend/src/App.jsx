@@ -3,7 +3,7 @@ import './App.css'
 import { AuthProvider} from './context/AuthContext'
 
 import PrivateRoute from './utils/PrivateRoute'
-
+import Nav from './components/Nav'
 import Home from './views/Home'
 import Products from './views/Products'
 import Contact from './views/Contact'
@@ -20,29 +20,11 @@ function App() {
   return (
     <>
       <Header title="Productos APP" />
-      <nav>
-        <ul>
-          <li>
-            <NavLink to='/'> Inicio</NavLink>
-          </li>
-          <li>
-            <NavLink to='/products'> Productos</NavLink>
-          </li>
-          <li>
-            <NavLink to='/users'>ABM Usuarios</NavLink>
-          </li>
-          <li>
-            <NavLink to='/login'>Login</NavLink>
-          </li>
-
-          <li>
-            <NavLink to='/contact'>Contactos </NavLink>
-          </li>
-        </ul>
-      </nav>
+      <AuthProvider>
+        <Nav></Nav>
 
       {/*  En está sección vamos a mostrar las vista */ }
-      <AuthProvider>
+   
         <Routes>
           <Route path='/'  element={ <Home />} />
           <Route path='/products' element={ <Products />} />
